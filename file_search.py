@@ -4,8 +4,10 @@ class FileSearch:
 	def __init__(self):	
 		self.os_name = sys.platform
 
+
 	def getValue(self, user):
 		file_name = user
+
 		if self.os_name == "linux":
 			location = []
 			username = getpass.getuser()
@@ -19,6 +21,24 @@ class FileSearch:
 						pass
 			for i in location:
 				print(i)
+
+		elif self.os_name.startswith("win"):
+			location = []
+			dl = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+			drives = ['%s:' % d for d in dl if os.path.exists('%s:' % d)]
+			for i in drives:
+				os.chdir("{}\\".format(i))
+				cwd = os.getcwd()
+				for root, dirs, files in os.walk(cwd):
+					for file in files:
+						if file == file_name or file.endswith(user.lower()):
+							location.append(os.path.join(root, file))
+						else:
+							pass
+
+			for i in location:
+				print(i)
+			
 		else:
 			pass
 

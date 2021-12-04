@@ -1,7 +1,8 @@
 import os, sys, getpass
 
 class FileSearch:
-	def __init__(self):	
+	def __init__(self):
+		self.current_location = os.getcwd()	
 		self.os_name = sys.platform		# Checking the OS name
 
 
@@ -19,8 +20,17 @@ class FileSearch:
 							location.append(os.path.join(root, file))
 						else:
 							pass
-				for i in location:
-					print(i)
+				show = input("See file(s) location right now? (Y/n): ")
+				if show.lower() == "y":
+					for i in location:
+						print("\t{}".format(i))
+					print("\n")
+				else:
+					os.chdir(self.current_location)
+					print("Check 'info.txt' in your folder.")
+					for iteration in location:
+						with open("info.txt", "a") as file:
+							file.write("{}\n".format(iteration))
 
 			elif self.os_name.startswith("win"):
 				location = []
@@ -37,9 +47,17 @@ class FileSearch:
 							else:
 								pass
 				print("\n")
-				for i in location:
-					print("\t{}".format(i))
-				print("\n")
+				show = input("See file(s) location right now? (Y/n): ")
+				if show.lower() == "y":
+					for i in location:
+						print("\t{}".format(i))
+					print("\n")
+				else:
+					os.chdir(self.current_location)
+					print("Check 'info.txt' in your folder.")
+					for iteration in location:
+						with open("info.txt", "a") as file:
+							file.write("{}\n".format(iteration))
 			else:
 				print("""
 					Let me know which Operating System you are using.
